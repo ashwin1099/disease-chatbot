@@ -1,0 +1,287 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: #f4f7fa;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    padding: 20px;
+    overflow: hidden;
+    background: url(/bg.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.chat-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 2rem;
+    width: 100%;
+    max-width: 1200px;
+    background: rgba(255, 255, 255, 0.8); /* Transparent white background */
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); /* Optional, keeps a shadow for contrast */
+    padding: 30px;
+    height: 80vh; /* Allow it to stretch vertically */
+    backdrop-filter: blur(10px); /* Optional: adds a blurred background effect */
+}
+
+.search-box {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 40%;
+}
+
+.search-box h2 {
+    font-size: 24px;
+    font-weight: 600;
+    color: #333;
+    text-align: center;
+}
+
+.search-box input {
+    width: 100%;
+    padding: 16px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+    outline: none;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.search-box input:focus {
+    border-color: #4C6EF5;
+    box-shadow: 0 0 5px rgba(76, 110, 245, 0.5);
+}
+
+.search-box button {
+    background-color: #4C6EF5;
+    color: white;
+    border: none;
+    padding: 14px 32px;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.search-box button:hover {
+    background-color: #3d56b1;
+    transform: translateY(-3px);
+}
+
+.search-box button:active {
+    transform: translateY(1px);
+}
+
+.response-box {
+    width: 55%;
+    overflow-y: auto;
+    max-height: 70vh;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.response-section {
+    padding: 20px;
+    border-radius: 10px;
+    font-size: 16px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+    transition: background-color 0.3s ease;
+}
+
+.response-section:hover {
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+}
+
+/* Light color backgrounds for sections */
+.overview {
+    background-color: #e3f2fd; /* Light blue */
+}
+
+.symptoms {
+    background-color: #ffe0b2; /* Light orange */
+}
+
+.prevention {
+    background-color: #c8e6c9; /* Light green */
+}
+
+.precautions {
+    background-color: #fff9c4; /* Light yellow */
+    color: #333;
+}
+
+.medicines {
+    background-color: #f3e5f5; /* Light purple */
+}
+
+.response h3 {
+    font-weight: 600;
+    color: #333;
+    font-size: 18px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.response h3::before {
+    content: '🔹'; 
+    color: #333;
+    font-size: 20px;
+}
+
+.response ul {
+    list-style-type: none;
+    padding: 0;
+    
+}
+
+.response ul li {
+margin-bottom: 12px;
+padding-left: 300px; /* Increased padding on the left */
+position: relative;
+line-height: 1.6;
+
+margin-left: 20px;
+}
+
+.response ul li::before {
+    content: '•';
+    color: #333;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+@media (max-width: 768px) {
+    .chat-container {
+        flex-direction: column;
+        gap: 2rem;
+    }
+
+    .search-box,
+    .response-box {
+        width: 100%;
+    }
+}
+
+.suggestion-box {
+    position: absolute;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    width: 100%;
+    max-height: 150px;
+    overflow-y: auto;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    display: none;
+    z-index: 10;
+}
+
+.suggestion-box ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.suggestion-box li {
+    padding: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.suggestion-box li:hover {
+    background-color: #f0f0f0;
+}
+
+/* Ensures the suggestions list is positioned below the search box */
+.search-box {
+    position: relative;
+}
+
+.loading-message{
+    margin-top: 10em;
+}
+
+.history-box {
+    width: 100%;
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    max-height: 250px;
+    overflow-y: auto;
+}
+
+.history-box h3 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.history-item {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    display: flex;
+    flex-direction: column;
+}
+
+.history-item:last-child {
+    border-bottom: none;
+}
+
+.history-item .disease-name {
+    font-size: 16px;
+    font-weight: 600;
+    color: #4C6EF5;
+}
+
+.history-item .overview {
+    font-size: 14px;
+    color: #555;
+}
+
+.history-item:hover {
+    background-color: #f1f1f1;
+    cursor: pointer;
+}
+
+.spinner {
+    border: 4px solid #f3f3f3; /* Light grey background */
+    border-top: 4px solid #4C6EF5; /* Blue spinner */
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 2s linear infinite;
+    margin: 0 auto;
+}
+
+/* Spinner animation */
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Additional styles for loading message */
+.loading-message {
+    text-align: center;
+    font-size: 18px;
+    color: #333;
+}

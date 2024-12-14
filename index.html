@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Disease Info Chatbot</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="chat-container">
+        <!-- Search Box -->
+        <div class="search-box" style="margin-top: 7em;">
+            <h2>Disease Info Chatbot</h2>
+            <input type="text" id="diseaseInput" placeholder="Ask me about the diesease" onkeyup="showSuggestions()" />
+            <button onclick="fetchDiseaseInfo()">Get Information</button>  <!-- History Box -->
+      
+           
+        </div>
+
+        <!-- Response Box -->
+        <div id="responseArea" class="response-box">
+            <h2>Disease Info</h2>
+        </div>
+    </div>
+
+    <script src="diseases.js"></script>
+    <script src="script.js"></script>
+
+
+
+    <script>
+       
+       
+    
+        let history = []; // To store search history
+    
+        function getDiseaseInfo(diseaseName) {
+            // Convert all disease names to lowercase for comparison
+            const diseasesDataLower = Object.keys(diseasesData).reduce((acc, key) => {
+                acc[key.toLowerCase()] = diseasesData[key];
+                return acc;
+            }, {});
+    
+            return diseasesDataLower[diseaseName] || null;
+        }
+    
+        function fetchDiseaseInfo() {
+            const diseaseName = document.getElementById('diseaseInput').value.trim().toLowerCase();
+            const responseArea = document.getElementById('responseArea');
+            const loadingElement = document.createElement('div');
+            
+            loadingElement.classList.add('loading-message');
+            loadingElement.innerHTML = `Loading... <div class="spinner"></div>`;
+            responseArea.innerHTML = '';
+            responseArea.appendChild(loadingElement);
+    
+            if (!diseaseName) {
+                responseArea.innerHTML = `<p>Please enter a disease name to search.</p>`;
+                return;
+            }
+
+            if (diseaseName === "hi" || diseaseName === "hello" || diseaseName === "hey" || diseaseName === "hii") {
+        // Make sure we select the <h2> tag inside responseArea and modify it
+        const h2Element = responseArea.querySelector('h2');
+        if (h2Element) {
+            h2Element.innerHTML = 'Hello! How can I help you today?'; // Update the <h2> text
+        } else {
+            // If there isn't already an <h2> tag inside, create one
+            const greetingElement = document.createElement('h2');
+            greetingElement.innerHTML = 'Hello! How can I help you today?';
+            responseArea.appendChild(greetingElement);
+        }
+        return;
+    }
+    
+            setTimeout(() => {
+                const diseaseInfo = getDiseaseInfo(diseaseName);
+                responseArea.innerHTML = '';
+    
+                if (diseaseInfo) {
+                    responseArea.innerHTML += `
+                        <div class="response-section overview">
+                            <h3>Overview:</h3>
+                            <p>${diseaseInfo.overview}</p>
+                        </div>
+                        <div class="response-section symptoms">
+                            <h3>Symptoms:</h3>
+                            <ul>${diseaseInfo.symptoms.map(symptom => `<li>${symptom}</li>`).join('')}</ul>
+                        </div>
+                        <div class="response-section prevention">
+                            <h3>Prevention:</h3>
+                            <ul>${diseaseInfo.prevention.map(method => `<li>${method}</li>`).join('')}</ul>
+                        </div>
+                        <div class="response-section precautions">
+                            <h3>Precautions:</h3>
+                            <ul>${diseaseInfo.precautions.map(precaution => `<li>${precaution}</li>`).join('')}</ul>
+                        </div>
+                        <div class="response-section medicines">
+                            <h3>Medicines:</h3>
+                            <ul>${diseaseInfo.medicines.map(medicine => `<li>${medicine}</li>`).join('')}</ul>
+                        </div>`;
+    
+                    // Add disease to history if found
+                    history.push({ name: diseaseName, overview: diseaseInfo.overview });
+                    updateHistory();
+                } else {
+                    responseArea.innerHTML = `<p>No information found for "${diseaseName}". Please check the spelling or try another disease.</p>`;
+                }
+            }, 3000);
+        }
+          // Event handler for detecting the Enter key press in the input field
+          function checkEnterKey(event) {
+            if (event.key === 'Enter') {
+                fetchDiseaseInfo(); // Trigger the search when Enter is pressed
+            }
+        }
+      
+        }
+    </script>
+    
+</html>
